@@ -13,7 +13,7 @@ CREATE TABLE typematch (
     Loss_point INT
 );
 
-CREATE TABLE match (
+CREATE TABLE ´match´ (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     Matchdate DATE,
     Typematch_id INT,
@@ -24,7 +24,7 @@ CREATE TABLE match (
 CREATE TABLE score (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     Match_id INT,
-    FOREIGN KEY (Match_id) REFERENCES match(id),
+    FOREIGN KEY (Match_id) REFERENCES ´match´(id),
     Participant_id INT,
     FOREIGN KEY (Participant_id) REFERENCES participant(id),
     Is_winner TINYINT(1) NOT NULL DEFAULT 0
@@ -37,7 +37,7 @@ CREATE TABLE point_change(
     FOREIGN KEY (Participant_id) REFERENCES participant(id),
     Match_id INT,
     FOREIGN KEY (Match_id) REFERENCES match(id),
-    Change INT,
+    ´Change´ INT,
     Reason VARCHAR (255)
 );
 
