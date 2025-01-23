@@ -32,6 +32,7 @@ Listen skal kunne opdateres og vise nye data, enten via en opdater-knap, automat
 - Der skal ikke være noget login- eller brugerautentifikationssystem.
 
 <br>
+
 ## Opgavens Formål:
 Få viden til at kunne vælge teknologi til frontend og backend, og begrunde hvordan disse valg opfylder kravene bedst muligt. Vurder herunder performance, udviklingshastighed, muligheder for datahåndtering og udvidelser af applikationen.
 
