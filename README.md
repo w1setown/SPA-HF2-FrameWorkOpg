@@ -41,6 +41,3 @@ Få viden til at kunne vælge teknologi til frontend og backend, og begrunde hvo
 1. Demonstration af løsningen
 2. Fremlæggelse, som beskriver frameworks og hvordan de implementeres.
 3. Eventuelle forbedringsforslag og diskussion af mulige alternative løsninger.
-    
-    
-
