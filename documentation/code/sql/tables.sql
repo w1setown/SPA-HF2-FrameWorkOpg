@@ -1,16 +1,3 @@
-CREATE TABLE `fakturalinje` (
-  `OrdreNummer` int NOT NULL AUTO_INCREMENT,
-  `VareID` int DEFAULT NULL,
-  `Antal` int DEFAULT NULL,
-  `Pris` decimal(10,2) DEFAULT NULL,
-  `Subtotal` decimal(10,2) GENERATED ALWAYS AS ((`Antal` * `Pris`)) VIRTUAL,
-  KEY `VareID` (`VareID`),
-  KEY `OrdreNummer` (`OrdreNummer`),
-  CONSTRAINT `fakturalinje_ibfk_2` FOREIGN KEY (`VareID`) REFERENCES `vare` (`VareID`),
-  CONSTRAINT `fakturalinje_ibfk_3` FOREIGN KEY (`OrdreNummer`) REFERENCES `faktura` (`OrdreNummer`)
-);
-
-
 CREATE TABLE participant (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     Name VARCHAR(25),
