@@ -1,21 +1,120 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="da">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <meta name="description" content="Udvikling af en Single Page Application (SPA) til turneringshåndtering" /> 
-    <title>(SPA) Turneringsåndtering</title>
-    <script
-      src="https://code.jquery.com/jquery-3.7.1.min.js"
-      integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
-      crossorigin="anonymous"
-    ></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Turneringshåndtering SPA</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="/frontend/style.css">
 </head>
 <body>
-    <main>
-        <section>
-        </section>
-    </main>
+    <h1>Turnering</h1>
+    <nav>
+        <button data-section="ranklist">Ranklist</button>
+        <button data-section="kampe">Seneste Kampe</button>
+        <button data-section="tilfoej-deltager">Tilføj Deltager</button>
+        <button data-section="registrer-kamp">Registrer Kamp</button>
+    </nav>
     
+    <!-- Ranklist Section -->
+    <section id="ranklist">
+        <h2>Ranklist</h2>
+        <div id="ranklist-data">
+            <!-- AJAX -->
+        </div>
+        <button id="refresh-ranklist">Opdater</button>
+    </section>
+    
+    <!-- Seneste Kampe Section -->
+    <section id="kampe">
+        <h2>Seneste Kampe</h2>
+        <div id="kampe-data">
+            <!-- AJAX -->
+        </div>
+        <button id="refresh-kampe">Opdater</button>
+    </section>
+    
+    <!-- Tilføj Deltager Section -->
+    <section id="tilfoej-deltager">
+        <h2>Tilføj Deltager</h2>
+        <form id="tilfoej-deltager-form">
+            <label for="navn">Deltagerens Navn:</label>
+            <input type="text" id="navn" name="navn" required>
+            <button type="submit">Tilføj</button>
+        </form>
+    </section>
+    
+    <!-- Registrer Kamp Section -->
+    <section id="registrer-kamp">
+        <h2>Registrer Kamp</h2>
+        <form id="registrer-kamp-form">
+            <label for="vinder_id">Vinderens ID:</label>
+            <input type="number" id="vinder_id" name="vinder_id" required><br><br>
+            <label for="taber_id">Taberens ID:</label>
+            <input type="number" id="taber_id" name="taber_id" required><br><br>
+            <label for="vinder_score">Vinderens Score:</label>
+            <input type="number" id="vinder_score" name="vinder_score" required><br><br>
+            <label for="taber_score">Taberens Score:</label>
+            <input type="number" id="taber_score" name="taber_score" required><br><br>
+            <button type="submit">Registrer</button>
+        </form>
+    </section>
+    
+    <script>
+        $(document).ready(function () {
+            // Navigation: Skift mellem sektioner
+            $('nav button').click(function () {
+                const sectionToShow = $(this).data('section');
+                $('section').hide();
+                $('#' + sectionToShow).show();
+            });
+
+            // Hent rankliste-data
+            function loadRankliste() {
+                $.get('/backend/rankliste.php', function (data) {
+                    $('#ranklist-data').html(data);
+                });
+            }
+
+            // Hent seneste kampe
+            function loadKampe() {
+                $.get('kampe.php', function (data) {
+                    $('#kampe-data').html(data);
+                });
+            }
+
+            // Opdater knapper
+            $('#refresh-ranklist').click(loadRanklist);
+            $('#refresh-kampe').click(loadKampe);
+
+            // Tilføj Deltager
+            $('#tilføj-deltager-form').submit(function (e) {
+                e.preventDefault();
+                const navn = $('#navn').val();
+                $.post('/backend/tilføj_deltager.php', { navn }, function (response) {
+                    alert(response);
+                    loadRanklist();
+                });
+                $('#navn').val('');
+            });
+
+            // Registrer Kamp
+            $('#tilføj-kamp-form').submit(function (e) {
+                e.preventDefault();
+                const formData = $(this).serialize();
+                $.post('/backend/tilføj_kamp.php', formData, function (response) {
+                    alert(response);
+                    loadRanklist();
+                    loadKampe();
+                });
+                $(this)[0].reset();
+            });
+
+            // Initial indlæsning
+            loadRanklist();
+            loadKampe();
+            $('#ranklist').show(); // Vis ranklist som standard
+        });
+    </script>
 </body>
 </html>
